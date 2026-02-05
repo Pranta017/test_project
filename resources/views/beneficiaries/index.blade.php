@@ -1,43 +1,71 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Beneficiaries') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Beneficiaries</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-5">
+    <div class="container">
+        <h2>Beneficiaries</h2>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                <!-- Example Beneficiaries Table -->
-                <h3 class="mb-4">Beneficiaries Table</h3>
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Registered At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>john@example.com</td>
-                            <td>2026-02-03</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jane Smith</td>
-                            <td>jane@example.com</td>
-                            <td>2026-02-02</td>
-                        </tr>
-                        <!-- Add dynamic rows later -->
-                    </tbody>
-                </table>
-
+        <!-- Excel Import Form -->
+        <form action="{{ route('beneficiaries.import') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+            @csrf
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <input type="file" name="file" class="form-control" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Import Excel</button>
+                </div>
             </div>
-        </div>
+        </form>
+
+        <!-- Display Table -->
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>NID</th>
+                    <th>Address</th>
+                    <th>Division</th>
+                    <th>District</th>
+                    <th>Upazila</th>
+                    <th>Union</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>Father</th>
+                    <th>Mother</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($beneficiaries as $b)
+                    <tr>
+                        <td>{{ $b->name }}</td>
+                        <td>{{ $b->nid }}</td>
+                        <td>{{ $b->address }}</td>
+                        <td>{{ $b->division }}</td>
+                        <td>{{ $b->district }}</td>
+                        <td>{{ $b->upazila }}</td>
+                        <td>{{ $b->union }}</td>
+                        <td>{{ $b->phone }}</td>
+                        <td>{{ $b->gender }}</td>
+                        <td>{{ $b->father }}</td>
+                        <td>{{ $b->mother }}</td>
+                        <td>{{ $b->created_at->format('Y-m-d') }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="12" class="text-center">No data found</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-</x-app-layout>
+</body>
+</html>

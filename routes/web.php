@@ -25,3 +25,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Table
+
+Route::get('/beneficiaries', [BeneficiaryController::class, 'index']);
+Route::post('/beneficiaries/import', [BeneficiaryController::class, 'importExcel'])->name('beneficiaries.import');
