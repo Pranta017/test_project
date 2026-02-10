@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Beneficiary;
 
 class ProfileController extends Controller
 {
@@ -57,4 +58,26 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    // Show form
+public function create()
+{
+    return view('beneficiaries.create');
+}
+
+// // Store form data
+// public function store(Request $request)
+// {
+//     $request->validate([
+//         'name' => 'required|string|max:255',
+//         'nid' => 'required|string|max:50',
+//         // baki field optional
+//     ]);
+
+//     Beneficiary::create($request->all());
+
+//     return redirect()->route('beneficiaries.index')
+//         ->with('success', 'Beneficiary added successfully!');
+// }
+
 }

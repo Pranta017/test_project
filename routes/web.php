@@ -1,32 +1,70 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BeneficiaryController;
+use App\Http\Controllers\DashboardController;
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'home'])->name('website.home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/beneficiaries', [BeneficiaryController::class, 'index'])->name('beneficiaries.index');
-});
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
 
-require __DIR__.'/auth.php';
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
-// Table
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 
-Route::get('/beneficiaries', [BeneficiaryController::class, 'index']);
-Route::post('/beneficiaries/import', [BeneficiaryController::class, 'importExcel'])->name('beneficiaries.import');
+    // Beneficiaries
+    Route::get('/beneficiaries', [BeneficiaryController::class, 'index'])
+        ->name('beneficiaries.index');
+
+    Route::get('/beneficiaries/create', [BeneficiaryController::class, 'create'])
+        ->name('beneficiaries.create');
+
+    Route::post('/beneficiaries', [BeneficiaryController::class, 'store'])
+        ->name('beneficiaries.store');
+
+    Route::get('/beneficiaries/{id}/edit', [BeneficiaryController::class, 'edit'])
+        ->name('beneficiaries.edit');
+
+    Route::put('/beneficiaries/{id}', [BeneficiaryController::class, 'update'])
+        ->name('beneficiaries.update');
+
+    Route::delete('/beneficiaries/{id}', [BeneficiaryController::class, 'destroy'])
+        ->name('beneficiaries.destroy');
+
+    Route::post('/beneficiaries/import', [BeneficiaryController::class, 'importExcel'])
+        ->name('beneficiaries.import');
+
+}); // 👈 এইটা খুব important
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__ . '/auth.php';
