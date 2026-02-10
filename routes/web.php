@@ -5,6 +5,14 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\Admin\MasterData\DivisionController;
+use App\Http\Controllers\Admin\MasterData\DistrictController;
+use App\Http\Controllers\Admin\MasterData\UpazilaController;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +67,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/beneficiaries/import', [BeneficiaryController::class, 'importExcel'])
         ->name('beneficiaries.import');
 
+    // Route::get('/master/data1', [MasterDataController::class, 'page1'])->name('admin.master.division');
+    // Route::get('/master/data2', [MasterDataController::class, 'page2'])->name('admin.master.district');
+    // Route::get('/master/data3', [MasterDataController::class, 'page3'])->name('admin.master.upazila');
+
+
+
+Route::prefix('admin/master-data')->group(function () {
+    Route::get('/division', [DivisionController::class, 'list'])->name('division.list');
+    Route::get('/district', [DistrictController::class, 'list'])->name('district.list');
+    Route::get('/upazila', [UpazilaController::class, 'list'])->name('upazila.list');
+});
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 }); // 👈 এইটা খুব important
 
 /*
