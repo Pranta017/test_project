@@ -7,7 +7,7 @@
     <div class="row mb-1">
         <div class="col">
             <h2 class="fw-bold">Beneficiary</h2>
-            <p class="text-muted">Beneficiary List</p>
+
         </div>
     </div>
 
@@ -27,6 +27,9 @@
             </div>
         </div>
     </form>
+
+    
+
 
     <!-- New Add button -->
     <div class="d-flex justify-content-end mb-4" style="margin-top: -60px;">

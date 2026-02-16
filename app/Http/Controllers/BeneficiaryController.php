@@ -73,6 +73,7 @@ class BeneficiaryController extends Controller
     {
         $beneficiary = Beneficiary::findOrFail($id);
         return view('admin.beneficiaries.edit', compact('beneficiary'));
+
     }
 
     public function update(Request $request, $id)
@@ -95,4 +96,18 @@ class BeneficiaryController extends Controller
         return redirect()->route('beneficiaries.index')
             ->with('success', 'Beneficiary deleted successfully!');
     }
+
+    
+
+
+
+
 }
+
+
+
+
+
+
+
+

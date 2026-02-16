@@ -65,19 +65,22 @@ public function create()
     return view('beneficiaries.create');
 }
 
-// // Store form data
-// public function store(Request $request)
-// {
-//     $request->validate([
-//         'name' => 'required|string|max:255',
-//         'nid' => 'required|string|max:50',
-//         // baki field optional
-//     ]);
+// Store form data
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'nid' => 'required|string|max:50',
+        // baki field optional
+    ]);
 
-//     Beneficiary::create($request->all());
+    Beneficiary::create($request->all());
 
-//     return redirect()->route('beneficiaries.index')
-//         ->with('success', 'Beneficiary added successfully!');
-// }
+    return redirect()->route('beneficiaries.index')
+        ->with('success', 'Beneficiary added successfully!');
+}
+
 
 }
+
+

@@ -43,30 +43,28 @@
                     class="list-group-item list-group-item-action bg-dark text-white border-0">Beneficiaries</a>
 
                 <div class="dropdown">
-    <a class="btn btn-dark dropdown-toggle w-100 text-start"
-       href="#"
-       data-bs-toggle="dropdown">
-        Master Data
-    </a>
+                    <a class="btn btn-dark dropdown-toggle w-100 text-start" href="#" data-bs-toggle="dropdown">
+                        Master Data
+                    </a>
 
-    <ul class="dropdown-menu w-100">
-        <li>
-            <a class="dropdown-item" href="{{ route('division.list') }}">
-                Division List
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item" href="{{ route('district.list') }}">
-                District List
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item" href="{{ route('upazila.list') }}">
-                Upazila List
-            </a>
-        </li>
-    </ul>
-</div>
+                    <ul class="dropdown-menu w-100">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('division.list') }}">
+                                Division List
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('district.list') }}">
+                                District List
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('upazila.list') }}">
+                                Upazila List
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
 
@@ -82,7 +80,9 @@
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile') }}">Profile</a>
+                                {{-- <a class="nav-link" href="{{ route('profile') }}">Profile</a> --}}
+                                <a class="nav-link" href="{{ route('profile.edit') }}">Profile</a>
+
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('logout') }}"
