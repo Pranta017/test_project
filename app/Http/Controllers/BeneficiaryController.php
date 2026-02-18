@@ -97,7 +97,10 @@ class BeneficiaryController extends Controller
             ->with('success', 'Beneficiary deleted successfully!');
     }
 
+    // Filter options
     
+
+
 
 
 

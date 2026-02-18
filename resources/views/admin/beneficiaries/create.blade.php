@@ -5,6 +5,13 @@
 
 @section('content')
 {{-- <x-app-layout> --}}
+    <div class="d-flex justify-content-between mb-3">
+            <h4>Add New Beneficiary</h4>
+            <a href="{{ route('beneficiaries.index') }}" class="btn btn-secondary">
+                ← Back
+            </a>
+        </div>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Add New Beneficiary

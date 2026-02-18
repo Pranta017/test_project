@@ -70,24 +70,42 @@ class DivisionController extends Controller
             ->with('success', 'Division Deleted Successfully');
     }
 
-    // Bad: public function list(Request $request) { ... }
 
-    // Good: rename to index
-    public function index(Request $request)
-    {
-        $query = \App\Models\Division::query();
 
-        // Filter
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
+     // Search filter
+    public function filter(Request $request)
+{
+    $query = Division::query();
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
+    if ($request->filled('search')) {
 
-        $divisions = $query->orderBy('id', 'desc')->get(); // no pagination
+        $search = $request->search;
 
-        return view('admin.master_data.division.list', compact('divisions'));
+        $query->where(function($q) use ($search){
+
+            $q->where('name','like',"%{$search}%")
+              ->orWhere('bn_name','like',"%{$search}%")
+              ->orWhere('description','like',"%{$search}%")
+              ->orWhere('url','like',"%{$search}%");
+
+        });
+
     }
+
+    // Status filter
+    if ($request->filled('status')) {
+
+        $query->where('status', $request->status);
+
+    }
+
+
+    $divisions = $query->paginate(10)->withQueryString();
+
+
+    return view('admin.master_data.division.list', compact('divisions'));
+}
+
+
+
 }

@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-between mb-3">
             <h3>Division List</h3>
 
-            <div>
+        <div>
                 <!-- Filter button is now a form toggle if you want later, for now we show inline -->
                 <a href="{{ route('division.create') }}" class="btn btn-success">
                     Add New Division
@@ -14,34 +14,44 @@
             </div>
         </div>
 
-        <!-- Filter Form Start -->
-        <form method="GET" action="{{ route('division.list') }}" class="mb-3">
-            <div class="row g-2">
-
-                <!-- Division Name -->
-                <div class="col-md-4">
-                    <input type="text" name="name" class="form-control" placeholder="Division Name"
-                        value="{{ request('name') }}">
-                </div>
-
-                <!-- Status -->
-                <div class="col-md-3">
-                    <select name="status" class="form-control">
-                        <option value="">-- Select Status --</option>
-                        <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                    </select>
-                </div>
-
-                <!-- Buttons -->
-                <div class="col-md-3 d-flex">
-                    <button type="submit" class="btn btn-primary me-2">Filter</button>
-                    <a href="{{ route('division.list') }}" class="btn btn-secondary">Reset</a>
-                </div>
-
+       {{-- Filter Option --}}
+<div class="row mb-3">
+    <div class="col-md-7">
+        <form method="GET" action="{{ route('division.filter') }}">
+            <div class="d-flex gap-2">
+                {{-- Search --}}
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Search anything..."
+                       value="{{ request('search') }}">
+                       
+                {{-- Status --}}
+                <select name="status" class="form-control">
+                    <option value="">All</option>
+                    <option value="Active"
+                        {{ request('status') == 'Active' ? 'selected' : '' }}>
+                        Active
+                    </option>
+                    <option value="Inactive"
+                        {{ request('status') == 'Inactive' ? 'selected' : '' }}>
+                        Inactive
+                    </option>
+               </select>
+                {{-- Filter Button --}}
+                <button class="btn btn-primary">
+                    Filter
+                </button>
+                {{-- Reset --}}
+                <a href="{{ route('division.list') }}"
+                   class="btn btn-secondary">
+                    Reset
+                </a>
             </div>
         </form>
-        <!-- Filter Form End -->
+    </div>
+</div>
+
 
         <!-- Table -->
         <table class="table table-bordered table-striped">

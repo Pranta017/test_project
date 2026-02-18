@@ -6,9 +6,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterDataController;
-use App\Http\Controllers\MasterData\UpazilaController;
-use App\Http\Controllers\MasterData\DistrictController;
 use App\Http\Controllers\MasterData\DivisionController;
+use App\Http\Controllers\MasterData\DistrictController;
+use App\Http\Controllers\MasterData\UpazilaController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('profile.destroy');
 
     // Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-
 
 
     // Beneficiaries
@@ -82,30 +83,55 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::prefix('master-data')->group(function () {
+
+        // Division Routes
         Route::get('/division', [DivisionController::class, 'list'])->name('division.list');
-
-        Route::get('/division', [DivisionController::class, 'index'])->name('division.list'); //Filter added
-
-
         Route::get('/division/create', [DivisionController::class, 'create'])->name('division.create');
-        Route::post('/division', [DivisionController::class, 'store'])->name('division.store');
+        Route::post('/division/store', [DivisionController::class, 'store'])->name('division.store');
+        Route::post('/district/store', [DistrictController::class, 'store'])->name('district.store');
+        Route::get('/division/edit/{id}', [DivisionController::class, 'edit'])->name('division.edit');
+        Route::put('/division/update/{id}', [DivisionController::class, 'update'])->name('division.update');
+        Route::delete('/division/delete/{id}', [DivisionController::class, 'destroy'])->name('division.destroy');
 
-        Route::get('/division/{id}/edit', [DivisionController::class, 'edit'])->name('division.edit');
-        Route::put('/division/{id}', [DivisionController::class, 'update'])->name('division.update');
-
-        Route::delete('/division/{id}', [DivisionController::class, 'destroy'])
-            ->name('division.destroy');
-
-
-
-
+        // District Routes
         Route::get('/district', [DistrictController::class, 'list'])->name('district.list');
-        Route::get('/upazila', [UpazilaController::class, 'list'])->name('upazila.list');
+        Route::get('/district/create', [DistrictController::class, 'create'])->name('district.create');
+        Route::post('/district/store', [DistrictController::class, 'store'])->name('district.store');
+        Route::get('/district/edit/{district}', [DistrictController::class, 'edit'])->name('district.edit');
+        Route::put('/district/update/{district}', [DistrictController::class, 'update'])->name('district.update');
+        Route::delete('/district/delete/{district}', [DistrictController::class, 'destroy'])->name('district.delete');
+        Route::get('/districts', [DistrictController::class, 'index'])->name('district.list');
 
 
-        Route::get('/admin/master-data/division', [DivisionController::class, 'list'])
-            ->name('division.list');
+        // Upazila Routes
+        Route::get('/upazilas', [UpazilaController::class, 'list'])->name('upazila.list');
+        Route::resource('upazila', UpazilaController::class);
+
+        Route::get('/upazila/create', [UpazilaController::class, 'create'])->name('upazilas.create');
+        Route::post('/upazila/store', [UpazilaController::class, 'store'])->name('upazilas.store');
+
+        Route::get('/get-districts/{division_id}', [UpazilaController::class, 'getDistricts'])->name('get.districts');
+        Route::get('/get-upazilas/{district_id}', [UpazilaController::class, 'getUpazilas'])->name('get.upazilas');
+
+
+
+        Route::get('/upazilas', [UpazilaController::class, 'list'])->name('upazila.list');
     });
+
+    // District filter route
+    Route::get('district/filter', [DistrictController::class, 'filter'])->name('district.filter');
+
+    // Division filter route
+    Route::get('division/filter', [DivisionController::class, 'filter'])->name('division.filter');
+
+    // beneficiary filter route
+    Route::get('beneficiary/filter', [BeneficiaryController::class, 'filter'])
+        ->name('beneficiary.filter');
+    Route::get('/beneficiary/list', [BeneficiaryController::class, 'list'])
+        ->name('beneficiary.list');
+
+
+
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 

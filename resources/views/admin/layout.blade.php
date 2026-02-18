@@ -118,7 +118,7 @@
             document.getElementById('sidebar-wrapper').classList.toggle('d-none');
         });
     </script>
-
+@yield('scripts')
 </body>
 
 </html>

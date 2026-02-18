@@ -18,7 +18,7 @@
             <form action="{{ route('division.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label>Name</label>
+                    <label>Division Name</label>
                     <input type="text" name="name" class="form-control" required>
                 </div>
 

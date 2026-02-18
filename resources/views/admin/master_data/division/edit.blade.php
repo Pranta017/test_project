@@ -19,7 +19,7 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label>Name</label>
+                    <label>Division Name</label>
                     <input type="text" name="name" value="{{ $division->name }}" class="form-control">
                 </div>
 
