@@ -113,8 +113,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/get-districts/{division_id}', [UpazilaController::class, 'getDistricts'])->name('get.districts');
         Route::get('/get-upazilas/{district_id}', [UpazilaController::class, 'getUpazilas'])->name('get.upazilas');
 
-
-
         Route::get('/upazilas', [UpazilaController::class, 'list'])->name('upazila.list');
     });
 

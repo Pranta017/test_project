@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Beneficiary;
+use App\Models\Division;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class BeneficiaryController extends Controller
 {
     public function index()
     {
-        $beneficiaries = Beneficiary::latest()->get();
+        $beneficiaries = Beneficiary::with('division', 'district', 'upazila')->latest()->get();
+
         return view('admin.beneficiaries.beneficiary', compact('beneficiaries'));
     }
 
@@ -49,8 +52,8 @@ class BeneficiaryController extends Controller
     }
 
     public function create()
-    {
-        return view('admin.beneficiaries.create');
+    {    $divisions = Division::where('status', 'active')->get();
+        return view('admin.beneficiaries.create', compact('divisions'));
     }
 
     public function store(Request $request)
@@ -60,10 +63,7 @@ class BeneficiaryController extends Controller
             'nid'  => 'required|string|max:50',
         ]);
 
-        Beneficiary::create($request->only([
-            'name','nid','address','division','district',
-            'upazila','union','phone','gender','father','mother'
-        ]));
+        Beneficiary::create($request->all());
 
         return redirect()->route('beneficiaries.index')
             ->with('success', 'Beneficiary added successfully!');
@@ -98,7 +98,7 @@ class BeneficiaryController extends Controller
     }
 
     // Filter options
-    
+
 
 
 

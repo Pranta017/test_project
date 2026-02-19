@@ -30,7 +30,7 @@
 
     {{-- Filter Form  --}}
 
-    
+
 
 
 
@@ -74,9 +74,9 @@
                             <td style="word-wrap: break-word; white-space: normal;">{{ $b->name }}</td>
                             <td style="word-wrap: break-word; white-space: normal;">{{ $b->nid }}</td>
                             <td style="word-wrap: break-word; white-space: normal;">{{ $b->phone }}</td>
-                            <td style="word-wrap: break-word; white-space: normal;">{{ $b->division }}</td>
-                            <td style="word-wrap: break-word; white-space: normal;">{{ $b->district }}</td>
-                            <td style="word-wrap: break-word; white-space: normal;">{{ $b->upazila }}</td>
+                            <td style="word-wrap: break-word; white-space: normal;">{{ $b->division->name }}</td>
+                            <td style="word-wrap: break-word; white-space: normal;">{{ $b->district->name }}</td>
+                            <td style="word-wrap: break-word; white-space: normal;">{{ $b->upazila->name }}</td>
                             <td style="word-wrap: break-word; white-space: normal;">{{ $b->union }}</td>
                             <td style="word-wrap: break-word; white-space: normal;">{{ $b->gender }}</td>
                             <td style="word-wrap: break-word; white-space: normal;">{{ $b->father }}</td>

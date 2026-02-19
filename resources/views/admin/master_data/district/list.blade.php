@@ -54,8 +54,8 @@
                 <tr>
                     <th>ID</th>
                     <th>District Name</th>
-                    <th>Division</th>
                     <th>Bangla Name</th>
+                    <th>Division</th>
                     <th>Description</th>
                     <th>Status</th>
                     <th>URL</th>

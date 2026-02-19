@@ -8,11 +8,9 @@
             <a href="{{ route('upazila.list') }}" class="btn btn-secondary">
                 ← Back
             </a>
-
         </div>
 
         <div class="mx-auto shadow-lg p-3 mb-5 bg-white rounded" style="max-width: 600px;">
-
             <form action="{{ route('upazilas.store') }}" method="POST">
                 @csrf
 
@@ -67,107 +65,55 @@
         </div>
     </div>
 @endsection
+
+
 @section('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
     <script>
+
         /* Division → District */
 
 
         $('#division').change(function() {
-
             var division_id = $(this).val();
-
-
             if (division_id) {
-
                 $('#district').html('<option>Loading...</option>');
-
-
                 $.ajax({
-
                     url: "{{ url('master-data/get-districts') }}/" + division_id,
-
                     type: "GET",
-
-
                     success: function(data) {
-
                         $('#district').empty();
-
                         $('#district').append('<option value="">Select District</option>');
-
-
                         $.each(data, function(key, value) {
-
                             $('#district').append('<option value="' + value.id + '">' + value
                                 .name + '</option>');
-
                         });
-
-
                         $('#upazila').html('<option value="">Select Upazila</option>');
-
                     }
-
                 });
-
             }
-
         });
-
-
-
-
 
 
         /* District → Upazila */
 
-
-
         $('#district').change(function() {
-
-
             var district_id = $(this).val();
-
-
-
             if (district_id) {
-
-
                 $('#upazila').html('<option>Loading...</option>');
-
-
-
                 $.ajax({
-
                     url: "{{ url('get-upazilas') }}/" + district_id,
-
                     type: "GET",
                     success: function(data) {
                         $('#upazila').empty();
-
                         $('#upazila').append('<option value="">Select Upazila</option>');
-
-
                         $.each(data, function(key, value) {
-
-
                             $('#upazila').append('<option value="' + value.id + '">' + value
                                 .name + '</option>');
-
-
                         });
-
-
                     }
-
                 });
-
             }
-
         });
     </script>
 @endsection

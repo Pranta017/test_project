@@ -16,9 +16,9 @@ public function up()
         $table->string('name');
         $table->string('nid')->nullable();
         $table->string('address')->nullable();
-        $table->string('division')->nullable();
-        $table->string('district')->nullable();
-        $table->string('upazila')->nullable();
+        $table->foreignId('division_id')->constrained('divisions')->onDelete('cascade');
+        $table->foreignId('district_id')->constrained('districts')->onDelete('cascade');
+        $table->foreignId('upazila_id')->constrained('upazilas')->onDelete('cascade');
         $table->string('union')->nullable();
         $table->string('phone')->nullable();
         $table->string('gender')->nullable();

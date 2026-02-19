@@ -13,11 +13,8 @@
 
         {{-- Filter --}}
 <div class="row mb-3">
-
     <div class="col-md-7">
-
         <form method="GET" action="{{ route('upazila.index') }}">
-
             <div class="d-flex gap-1">
 
                 {{-- Search box --}}
@@ -29,7 +26,6 @@
 
                 {{-- Status filter --}}
                 <select name="status" class="form-control">
-
                     <option value="">All</option>
 
                     <option value="Active"
@@ -41,7 +37,6 @@
                         {{ request('status') == 'Inactive' ? 'selected' : '' }}>
                         Inactive
                     </option>
-
                 </select>
 
                 {{-- Filter button --}}
@@ -52,20 +47,12 @@
                 {{-- Reset --}}
                 <a href="{{ route('upazila.index') }}"
                    class="btn btn-secondary">
-
                     Reset
-
                 </a>
-
             </div>
-
         </form>
-
     </div>
-
 </div>
-
-
 
 
     @if (session('success'))

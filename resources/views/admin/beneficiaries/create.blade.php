@@ -1,16 +1,15 @@
+@extends('admin.layout') <!-- main layout use korbe -->
 
-@extends('admin.layout')  <!-- main layout use korbe -->
-
-@section('title', 'Add New Beneficiary')  <!-- page title -->
+@section('title', 'Add New Beneficiary') <!-- page title -->
 
 @section('content')
-{{-- <x-app-layout> --}}
+    {{-- <x-app-layout> --}}
     <div class="d-flex justify-content-between mb-3">
-            <h4>Add New Beneficiary</h4>
-            <a href="{{ route('beneficiaries.index') }}" class="btn btn-secondary">
-                ← Back
-            </a>
-        </div>
+        <h4>Add New Beneficiary</h4>
+        <a href="{{ route('beneficiaries.index') }}" class="btn btn-secondary">
+            ← Back
+        </a>
+    </div>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -43,21 +42,36 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label class="form-label">Division</label>
-                                        <input type="text" name="division" class="form-control">
+
+                                    <div class="mb-3">
+                                        <label>Division</label>
+                                        <select name="division_id" id="division" class="form-control">
+                                            <option value="">Select Division</option>
+                                            @foreach ($divisions as $division)
+                                                <option value="{{ $division->id }}"
+                                                    {{ old('division_id') == $division->id ? 'selected' : '' }}>
+                                                    {{ $division->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label class="form-label">District</label>
-                                        <input type="text" name="district" class="form-control">
+
+                                    <div class="mb-3">
+                                        <label>District</label>
+                                        <select name="district_id" id="district" class="form-control">
+                                            <option value="">Select District</option>
+
+                                        </select>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label class="form-label">Upazila</label>
-                                        <input type="text" name="upazila" class="form-control">
+                                    <div class="mb-3">
+                                        <label>Upazila</label>
+                                        <select name="upazila_id" id="upazila" class="form-control">
+                                            <option value="">Select Upazila</option>
+                                        </select>
                                     </div>
+
                                     <div class="mb-3 col-md-6">
                                         <label class="form-label">Union</label>
                                         <input type="text" name="union" class="form-control">
@@ -97,6 +111,77 @@
 
     <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-{{-- </x-app-layout> --}}
+    {{-- </x-app-layout> --}}
 
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        /* Division → District */
+
+
+        $('#division').change(function() {
+            var division_id = $(this).val();
+            if (division_id) {
+                $('#district').html('<option>Loading...</option>');
+                $.ajax({
+                    url: "{{ url('master-data/get-districts') }}/" + division_id,
+                    type: "GET",
+                    success: function(data) {
+                        $('#district').empty();
+                        $('#district').append('<option value="">Select District</option>');
+                        $.each(data, function(key, value) {
+                            $('#district').append('<option value="' + value.id + '">' + value
+                                .name + '</option>');
+                        });
+                        $('#upazila').html('<option value="">Select Upazila</option>');
+                    }
+                });
+            }
+        });
+
+
+        /* District → Upazila */
+
+        $('#district').change(function() {
+            var district_id = $(this).val();
+            if (district_id) {
+                $('#upazila').html('<option>Loading...</option>');
+                $.ajax({
+                    url: "{{ url('master-data/get-upazilas') }}/" + district_id,
+                    type: "GET",
+                    success: function(data) {
+                        $('#upazila').empty();
+                        $('#upazila').append('<option value="">Select Upazila</option>');
+                        $.each(data, function(key, value) {
+                            $('#upazila').append('<option value="' + value.id + '">' + value
+                                .name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+
+              //Upazila
+
+        $('#district').change(function() {
+            var district_id = $(this).val();
+            if (district_id) {
+                $('#upazila').html('<option>Loading...</option>');
+                $.ajax({
+                    url: "{{ url('get-upazilas') }}/" + district_id,
+                    type: "GET",
+                    success: function(data) {
+                        $('#upazila').empty();
+                        $('#upazila').append('<option value="">Select Upazila</option>');
+                        $.each(data, function(key, value) {
+                            $('#upazila').append('<option value="' + value.id + '">' + value
+                                .name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
