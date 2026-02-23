@@ -10,12 +10,33 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class BeneficiaryController extends Controller
 {
-    public function index()
-    {
-        $beneficiaries = Beneficiary::with('division', 'district', 'upazila')->latest()->get();
+    // public function index(Request $request)
+    // {
+    //     $query = Beneficiary::with(['division', 'district', 'upazila']);
 
-        return view('admin.beneficiaries.beneficiary', compact('beneficiaries'));
-    }
+    //     if ($request->filled('search')) {
+
+    //         $search = $request->search;
+    //         Log::info("Search term: {$search}"); // Debug log for search term
+
+    //         $query->where(function ($q) use ($search) {
+
+    //             $q->where('name', 'like', "%{$search}%")
+    //                 ->orWhereHas('division', function ($q2) use ($search) {
+    //                     $q2->where('name', 'like', "%{$search}%");
+    //                 })
+
+    //                 ->orWhereHas('district', function ($q3) use ($search) {
+    //                     $q3->where('name', 'like', "%{$search}%");
+    //                 });
+    //         });
+    //     }
+
+    //     $beneficiaries = $query->paginate(10)->withQueryString();
+    //     // $beneficiaries = Beneficiary::with('division', 'district', 'upazila')->latest()->get();
+
+    //     return view('admin.beneficiaries.beneficiary', compact('beneficiaries'));
+    // }
 
     public function importExcel(Request $request)
     {
@@ -52,7 +73,8 @@ class BeneficiaryController extends Controller
     }
 
     public function create()
-    {    $divisions = Division::where('status', 'active')->get();
+    {
+        $divisions = Division::where('status', 'active')->get();
         return view('admin.beneficiaries.create', compact('divisions'));
     }
 
@@ -73,7 +95,6 @@ class BeneficiaryController extends Controller
     {
         $beneficiary = Beneficiary::findOrFail($id);
         return view('admin.beneficiaries.edit', compact('beneficiary'));
-
     }
 
     public function update(Request $request, $id)
@@ -81,8 +102,17 @@ class BeneficiaryController extends Controller
         $beneficiary = Beneficiary::findOrFail($id);
 
         $beneficiary->update($request->only([
-            'name','nid','address','division','district',
-            'upazila','union','phone','gender','father','mother'
+            'name',
+            'nid',
+            'address',
+            'division',
+            'district',
+            'upazila',
+            'union',
+            'phone',
+            'gender',
+            'father',
+            'mother'
         ]));
 
         return redirect()->route('beneficiaries.index')
@@ -97,20 +127,49 @@ class BeneficiaryController extends Controller
             ->with('success', 'Beneficiary deleted successfully!');
     }
 
+
+
     // Filter options
 
+    public function index(Request $request)
+    {
+
+        $query = Beneficiary::query();
+
+        // Search filter
+        if ($request->search) {
+
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('phone', 'like', '%' . $request->search . '%')
+                ->orWhere('nid', 'like', '%' . $request->search . '%')
+                ->orWhereHas('division', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('district', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('upazila', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%');
+                });
+        }
+
+        $beneficiaries = $query->get();
+        return view(
+            'admin.beneficiaries.beneficiary',
+            compact('beneficiaries')
+        );
+    }
 
 
+    // show details option
+
+    public function show($id)
+    {
+        $beneficiary = Beneficiary::findOrFail($id);
+
+        return view('admin.beneficiaries.show', compact('beneficiary'));
+    }
 
 
-
-
+    
 }
-
-
-
-
-
-
-
-

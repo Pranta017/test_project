@@ -63,9 +63,14 @@
                                 Upazila List
                             </a>
                         </li>
+
+                        <li>
+                            <a class="dropdown-item" href="{{ route('benefits.list') }}">
+                                Benefit List
+                            </a>
+                        </li>
                     </ul>
                 </div>
-
             </div>
 
         </div>
@@ -118,7 +123,7 @@
             document.getElementById('sidebar-wrapper').classList.toggle('d-none');
         });
     </script>
-@yield('scripts')
+    @yield('scripts')
 </body>
 
 </html>

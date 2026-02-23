@@ -20,7 +20,7 @@ class DivisionController extends Controller
 
     public function create()
     {
-        return view('admin.master_data.division.create'); // list/create.blade.php হবে না, আলাদা form
+        return view('admin.master_data.division.create');
     }
 
     public function store(Request $request)

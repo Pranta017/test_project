@@ -5,10 +5,12 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MasterData\BenefitController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\MasterData\DivisionController;
 use App\Http\Controllers\MasterData\DistrictController;
 use App\Http\Controllers\MasterData\UpazilaController;
+
 
 
 
@@ -60,6 +62,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/beneficiaries/{id}/edit', [BeneficiaryController::class, 'edit'])
         ->name('beneficiaries.edit');
 
+    Route::get('/beneficiaries/{id}', [BeneficiaryController::class, 'show'])
+    ->name('beneficiaries.show');
+
 
     //  [Benficiary_table edit]
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -76,9 +81,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-    // Route::get('/master/data1', [MasterDataController::class, 'page1'])->name('admin.master.division');
-    // Route::get('/master/data2', [MasterDataController::class, 'page2'])->name('admin.master.district');
-    // Route::get('/master/data3', [MasterDataController::class, 'page3'])->name('admin.master.upazila');
 
 
 
@@ -88,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/division', [DivisionController::class, 'list'])->name('division.list');
         Route::get('/division/create', [DivisionController::class, 'create'])->name('division.create');
         Route::post('/division/store', [DivisionController::class, 'store'])->name('division.store');
-        Route::post('/district/store', [DistrictController::class, 'store'])->name('district.store');
+        // Route::post('/district/store', [DistrictController::class, 'store'])->name('district.store');
         Route::get('/division/edit/{id}', [DivisionController::class, 'edit'])->name('division.edit');
         Route::put('/division/update/{id}', [DivisionController::class, 'update'])->name('division.update');
         Route::delete('/division/delete/{id}', [DivisionController::class, 'destroy'])->name('division.destroy');
@@ -114,7 +116,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/get-upazilas/{district_id}', [UpazilaController::class, 'getUpazilas'])->name('get.upazilas');
 
         Route::get('/upazilas', [UpazilaController::class, 'list'])->name('upazila.list');
+
+
+        // Benefit Routes
+        Route::get('/benefits', [BenefitController::class, 'list'])->name('benefits.list');
+        Route::get('/benefit/create', [BenefitController::class, 'create'])->name('benefit.create');
+        Route::post('/benefit/store', [BenefitController::class, 'store'])->name('benefit.store');
+        Route::get('/benefit/edit/{id}', [BenefitController::class, 'edit'])->name('benefit.edit');
+        Route::put('/benefit/update/{id}', [BenefitController::class, 'update'])->name('benefit.update');
+        Route::delete('/benefit/delete/{id}', [BenefitController::class, 'destroy'])->name('benefit.destroy');
+
     });
+
+
 
     // District filter route
     Route::get('district/filter', [DistrictController::class, 'filter'])->name('district.filter');
@@ -123,11 +137,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('division/filter', [DivisionController::class, 'filter'])->name('division.filter');
 
     // beneficiary filter route
+
     Route::get('beneficiary/filter', [BeneficiaryController::class, 'filter'])
         ->name('beneficiary.filter');
+
     Route::get('/beneficiary/list', [BeneficiaryController::class, 'list'])
         ->name('beneficiary.list');
 
+    Route::get('/beneficiaries', [BeneficiaryController::class, 'index'])
+    ->name('beneficiaries.index');
 
 
 
